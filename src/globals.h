@@ -51,6 +51,7 @@ _SIMULERR_(CFILE_ERROR, 30)
 #define _CVAR_ 0.2307692
 #define _DVAR_ .75
 
+
 /// * text messages *
 #define _PRGRM_TEXT_ "Simulation of the Izhikevich neuron model"
 #define _TIME_TEXT_ "Number of time-steps"

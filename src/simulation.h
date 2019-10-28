@@ -8,12 +8,12 @@
   These streams can be files with names based on the string \ref output with a suffix.
 
   Simulation parameters:
-  - \ref endtime : total number of time-steps,
-  - \ref size : total number of neurons,
-  - \ref degree : average connectivity of a neuron,
+  - \ref endtime : total number of time-steps, (durée de la simulation)
+  - \ref size : total number of neurons,  (nombres de neurones)
+  - \ref degree : average connectivity of a neuron, (connectivité moyenne -> λ)
   - \ref thalam : st. dev. of thalamic input (for excitatory neurons),
-  - \ref streng : average intensity of connections, 
-  - \ref inhib : fraction of inhibitory neurons in the network, 
+  - \ref streng : average intensity of connections, (intensité moyenne des connections)
+  - \ref inhib : fraction of inhibitory neurons in the network, (proportion de neurons excitateurs)
 
   The map \ref ntypes describes the neuron population: 
   its keys are the neuron types from \ref Neuron::NeuronTypes and values are the corresponding counts.

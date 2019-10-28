@@ -128,3 +128,93 @@ void Network::print_traj(const int time, const std::map<std::string, size_t> &_n
             }
     (*_out) << std::endl;
 }
+
+
+std::pair<size_t, double> Network::degree(const size_t& index) const 
+{
+	std::vector<std::pair<size_t, double> > connections(neighbors(index));
+	///{neuron index, link intensity}
+	double sum;
+
+	for (auto n : connections) {
+		sum += n.second;
+	}
+	
+	return {connections.size(), sum};
+}
+
+std::vector<std::pair<size_t, double> >  Network::neighbors(const size_t& index) const 
+{
+	std::vector<std::pair<size_t, double> > neighbors;
+	/*for (auto c : links) {
+		if((c.first).first == index) {
+			neighbors.push_back({(c.first).second, c.second});
+		}
+	}
+	*/
+	for(std::map<std::pair<size_t,size_t>, double>::const_iterator i=links.lower_bound({index,0});
+	i != links.end() and (i->first).first == index; i++){
+		neighbors.push_back({(i->first).second, i->second});
+	}
+	return neighbors;
+}
+
+std::set<size_t>  Network::step(const std::vector<double>& thalam)
+{
+	std::set<size_t> firing;
+	
+	for(size_t i=0; i < neurons.size(); i++){
+		if (neurons[i].firing()) {
+			neurons[i].reset();
+			firing.insert(i);
+			}
+		}
+	
+	for (size_t i=0; i < neurons.size(); i++){
+		/*if (neurons[i].firing()) {
+			neurons[i].reset();
+			}
+			*/
+			
+		double w (0);
+		double I(0.);
+		double sum_e(0.);
+		double sum_i(0.);
+		std::vector<std::pair<size_t, double> > connect(neighbors(i));
+		
+		if(neurons[i].is_inhibitory()) {w = 0.4;}
+		else {w = 1;}
+		
+		for (auto neigh : connect) {	
+			if(neurons[neigh.first].firing()){ 
+				if (neurons[neigh.first].is_inhibitory()) {sum_i += neigh.second;}
+				else {sum_e += neigh.second;}
+				I = 0.5*(sum_e)+sum_i;
+			}
+		}
+
+		I += thalam[i]*w;
+		neurons[i].input(I);
+		neurons[i].step();
+		/*if (neurons[i].firing()) {
+			firing.insert(i);
+						}
+						*/
+	}
+		
+	return firing;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

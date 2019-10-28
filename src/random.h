@@ -32,7 +32,7 @@ public:
     double uniform_double(double lower=0, double upper=1);
     void normal(std::vector<double>&, double mean=0, double sd=1);
     double normal(double mean=0, double sd=1);
-    void poisson(std::vector<int>&, double mean=1);
+    void poisson(std::vector<int>& vect, double mean=1);
     int poisson(double mean=1);
 ///@}
 /*! @name Auxiliary function
